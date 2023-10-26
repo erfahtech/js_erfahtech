@@ -20,4 +20,4 @@ const logout = () => {
     });
 }
 
-export default logout;
+window.logout = logout;

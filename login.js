@@ -56,4 +56,4 @@ function responseData(result) {
     }
 }
 
-export default postLogin;
+window.postLogin = postLogin;
