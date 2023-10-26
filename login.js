@@ -2,7 +2,6 @@ import { postWithToken } from "https://jscroot.github.io/api/croot.js";
 import { getValue } from "https://jscroot.github.io/element/croot.js";
 import { setCookieWithExpireHour } from "https://jscroot.github.io/cookie/croot.js";
 
-window.onload = (postLogin)
 
 const postLogin = () => {
     const email = getValue("emaillogin");
