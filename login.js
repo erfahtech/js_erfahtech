@@ -13,6 +13,8 @@ const postLogin = () => {
       title: "Login Failed",
       text: "Please fill in both email and password fields.",
     });
+
+    loadingElement.style.display = "none";
     return;
   }
 
@@ -26,9 +28,7 @@ const postLogin = () => {
     password,
   };
 
-  postWithToken(target_url, tokenkey, tokenvalue, datainjson, responseData, () => {
-    loadingElement.style.display = "none";
-  });
+  postWithToken(target_url, tokenkey, tokenvalue, datainjson, responseData);
 };
 
 function responseData(result) {
