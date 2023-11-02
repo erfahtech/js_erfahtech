@@ -28,7 +28,9 @@ const postLogin = () => {
     password,
   };
 
-  postWithToken(target_url, tokenkey, tokenvalue, datainjson, responseData);
+  postWithToken(target_url, tokenkey, tokenvalue, datainjson, responseData, () => {
+    loadingElement.style.display = "none";
+  });
 };
 
 function responseData(result) {
@@ -53,8 +55,8 @@ function responseData(result) {
       title: "Login Failed",
       text: result.message,
     });
-    loadingElement.style.display = "none";
   }
+  loadingElement.style.display = "none";
 }
 
 window.postLogin = postLogin;
