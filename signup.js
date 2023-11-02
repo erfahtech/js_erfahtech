@@ -1,4 +1,4 @@
-import { setInner, getValue } from "https://jscroot.github.io/element/croot.js";
+import { getValue } from "https://jscroot.github.io/element/croot.js";
 
 const postSignUp = () => {
   const email = getValue("emailsignup");
@@ -12,7 +12,7 @@ const postSignUp = () => {
     Swal.fire({
       icon: "error",
       title: "Signup Failed",
-      text: "Please fill in all fields."
+      text: "Please fill in all fields.",
     });
 
     loadingElement.style.display = "none";
@@ -23,22 +23,19 @@ const postSignUp = () => {
   const datainjson = {
     email,
     username,
-    password
+    password,
   };
 
   fetch(target_url, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(datainjson)
+    body: JSON.stringify(datainjson),
   })
     .then((response) => response.json())
     .then((result) => {
       responseData(result);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
     })
     .finally(() => {
       loadingElement.style.display = "none";
@@ -46,11 +43,11 @@ const postSignUp = () => {
 };
 
 const responseData = (result) => {
-  if (result) {
+  if (result.status === true) {
     Swal.fire({
       icon: "success",
       title: "SignUp Successful",
-      text: "You have successfully signed up."
+      text: "You have successfully signed up.",
     }).then((result) => {
       if (result.isConfirmed || result.isDismissed) {
         window.location.href = "login.html";
@@ -60,7 +57,7 @@ const responseData = (result) => {
     Swal.fire({
       icon: "error",
       title: "Signup Failed",
-      text: result.message
+      text: result.message,
     });
   }
 };
