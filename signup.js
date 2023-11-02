@@ -59,6 +59,7 @@ const responseData = (result) => {
       title: "Signup Failed",
       text: result.message,
     });
+    loadingElement.style.display = "none";
   }
 };
 
