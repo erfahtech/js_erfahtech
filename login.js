@@ -18,7 +18,7 @@ const postLogin = () => {
 
     loadingElement.style.display = "block";
 
-    const target_url = "https://asia-southeast2-urse-project.cloudfunctions.net/post-login";
+    const target_url = "https://asia-southeast2-urse-project.cloudfunctions.net/urse-login";
     const tokenkey = "token";
     const tokenvalue = "c49482e6de1fa07a349f354c2277e11bc7115297a40a1c09c52ef77b905d07c4";
     const datainjson = {
@@ -44,7 +44,7 @@ function responseData(result) {
             text: "You have successfully logged in."
         }).then((result) => {
             if (result.isConfirmed || result.isDismissed) {
-                window.location.href = "../user/dashboard1.html";
+                window.location.href = "../user/dashboard.html";
             }
         });
     } else {
