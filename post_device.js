@@ -13,6 +13,7 @@ const postDevices = () => {
   const topic = document.getElementById("isiTopic").value;
   const loadingElement = document.getElementById("loading");
   const diabuttonElement = document.getElementById("diabutton");
+  const email = localStorage.getItem("userEmail");
 
   diabuttonElement.style.display = "none";
   loadingElement.style.display = "block";
@@ -32,7 +33,7 @@ const postDevices = () => {
   const target_url = "https://asia-southeast2-urse-project.cloudfunctions.net/urse-insertdevices";
   const datainjson = {
     name: nama,
-    topic: topic,
+    topic: "urse/" + email + "/" + topic,
   };
 
   postWithBearer(target_url, getCookie("token"), datainjson, (result) => {
