@@ -18,10 +18,12 @@ const updatetWithBearer = async (target_url, token, datajson, responseFunction) 
         const response = await fetch(target_url, requestOptions);
         const result = await response.text();
         responseFunction(JSON.parse(result));
+        return response; // Return the entire response object
     } catch (error) {
-        console.error("Error:", error);
+        console.log("error", error);
+        throw error; // Rethrow the error to be caught in the calling function
     }
-};
+}
 
 const editDevice = async (IDEDIT, NAME, TOPIC) => {
     const deviceId = IDEDIT;
@@ -79,11 +81,11 @@ const editDevice = async (IDEDIT, NAME, TOPIC) => {
                 name: newName,
                 topic: newTopic,
             };
-
+        
             try {
-                await updatetWithBearer(target_url, token, requestBody, (result) => result);
-
-                if (response.status) {
+                const response = await updatetWithBearer(target_url, token, requestBody, (result) => result);
+        
+                if (response && response.status) {
                     await Swal.fire({
                         icon: "success",
                         title: response.message || "Perangkat berhasil diubah",
@@ -92,8 +94,8 @@ const editDevice = async (IDEDIT, NAME, TOPIC) => {
                     });
                     location.reload();
                 } else {
-                    console.error("Request failed with status:", response.status);
-                    throw new Error("Request failed with status: " + response.status);
+                    console.error("Request failed with status:", response && response.status);
+                    throw new Error("Request failed with status: " + (response && response.status));
                 }
             } catch (error) {
                 console.error("Error:", error);
