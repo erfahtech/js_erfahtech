@@ -4,8 +4,8 @@ const logout = () => {
         text: "Sesi kamu akan berakhir!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "#6750A4",
+        cancelButtonColor: "#999999",
         confirmButtonText: "Logout",
     }).then((result) => {
         if (result.isConfirmed) {
