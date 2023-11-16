@@ -81,10 +81,10 @@ const editDevice = async (IDEDIT, NAME, TOPIC) => {
                 name: newName,
                 topic: newTopic,
             };
-        
+
             try {
                 const response = await updatetWithBearer(target_url, token, requestBody, (result) => result);
-        
+
                 if (response && response.status) {
                     await Swal.fire({
                         icon: "success",
