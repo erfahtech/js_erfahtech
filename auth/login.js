@@ -139,6 +139,7 @@ function responseData(result) {
 
     const loginButton = document.getElementById("buttonlogin");
     const email = getValue("emaillogin");
+    const pesanlogin = result.message;
 
     loginButton.style.display = "none";
 
@@ -151,6 +152,7 @@ function responseData(result) {
         window.location.href = "../user/dashboard.html";
         // Store the email in localStorage
         localStorage.setItem("userEmail", email);
+        localStorage.setItem("pesanlogin", pesanlogin);
       }
     });
   } else {

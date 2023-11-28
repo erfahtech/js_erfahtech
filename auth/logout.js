@@ -15,6 +15,7 @@ const logout = () => {
       localStorage.removeItem("totalDevices");
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userlocation");
+      localStorage.removeItem("pesanlogin");
       // Menghapus toke dari cookie
       document.cookie = "token= ; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 

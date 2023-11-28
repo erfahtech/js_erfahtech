@@ -1,16 +1,9 @@
 import { postWithBearer } from "https://jscroot.github.io/api/croot.js";
 import { getCookie } from "https://jscroot.github.io/cookie/croot.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const loadingElement = document.getElementById("loading");
-  if (loadingElement) {
-    loadingElement.style.display = "none";
-  }
-});
-
 const postDevices = () => {
   const nama = document.getElementById("isiName").value;
-  const topic = document.getElementById("isiTopic").value;
+  let topic = document.getElementById("isiTopic").value;
   const loadingElement = document.getElementById("loading");
   const diabuttonElement = document.getElementById("diabutton");
   const email = localStorage.getItem("userEmail");
@@ -30,10 +23,26 @@ const postDevices = () => {
     return;
   }
 
+  // Validate topic using regex
+  const topicRegex = /^[a-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/`-]+$/; // Allow letters lower case, numbers, and symbols
+  if (!topicRegex.test(topic)) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal Menambahkan Device",
+      text: "Topik hanya boleh berisi huruf kecil, angka, dan simbol.",
+    });
+
+    loadingElement.style.display = "none";
+    diabuttonElement.style.display = "flex";
+    return;
+  }
+
+  // If validation passes, proceed with the API call
+  topic = "urse/" + email + "/" + topic;
   const target_url = "https://asia-southeast2-urse-project.cloudfunctions.net/urse-insertdevices";
   const datainjson = {
     name: nama,
-    topic: "urse/" + email + "/" + topic,
+    topic: topic,
   };
 
   postWithBearer(target_url, getCookie("token"), datainjson, (result) => {
@@ -62,5 +71,12 @@ const responseData = (result) => {
     });
   }
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  const loadingElement = document.getElementById("loading");
+  if (loadingElement) {
+    loadingElement.style.display = "none";
+  }
+});
 
 window.postDevices = postDevices;
