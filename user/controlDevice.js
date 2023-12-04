@@ -1,10 +1,66 @@
 // import mqqtt connection
-import mqttClient from "../mqtt/mqttConnection.js";
-// import logPublish
-import { logPublish } from "../mqtt/logPublish.js";
-// import UpdateStatus
-import { updateStatusDevice } from "../edit/updateStatusDevice.js";
+import mqttClient from "./mqttConnection.js";
+import { logPublish } from "./logPublish.js";
+import { logSubcribe } from "./logSubcribe.js";
+import { updateStatusDevice } from "./updateStatusDevice.js";
 
+// mqttSubscribe.js
+let i = 1;
+let isFunctionActive = true;
+
+function runFunction(topic, suhu, humidity) {
+  if (isFunctionActive) {
+    logSubcribe(topic, suhu, Math.abs(humidity));
+    isFunctionActive = false;
+    setTimeout(() => {
+      isFunctionActive = true;
+      console.log("Fungsi dapat dijalankan kembali setelah 4 menit.");
+    }, 4 * 60 * 1000); // Waktu dalam milidetik (4 menit)
+  } else {
+    console.log("Fungsi sedang dinonaktifkan.");
+  }
+}
+
+function handleMqttMessage(topic, message) {
+  const email = localStorage.getItem("userEmail");
+  const receivedMessage = message.toString();
+  console.log(`Received message on topic ${topic}: ${receivedMessage} ke ${i++}`);
+
+  if (topic === "urse/" + email + "/monitoring") {
+    let data = receivedMessage.match(/(-?\d+(\.\d+)?)/g);
+    if (data && data.length === 2) {
+      let temperature = parseFloat(data[0]);
+      let humidity = parseFloat(data[1]);
+
+      if (!isNaN(temperature) && !isNaN(humidity)) {
+        console.log("Suhu:", temperature);
+        console.log("Humidity:", Math.abs(humidity));
+        runFunction(topic, temperature, humidity);
+      } else {
+        console.log("Invalid temperature or humidity value received:", receivedMessage);
+      }
+    } else {
+      console.log("Invalid message format:", receivedMessage);
+    }
+  }
+}
+
+export function initializeMqttConnection() {
+  mqttClient.on("connect", () => {
+    const email = localStorage.getItem("userEmail");
+    console.log("Subcribing...");
+    mqttClient.subscribe("urse/" + email + "/monitoring");
+    console.log("Berlangganan ke topik urse/" + email + "/monitoring");
+  });
+
+  mqttClient.on("message", handleMqttMessage);
+
+  mqttClient.on("error", (error) => {
+    console.error("Kesalahan koneksi MQTT:", error);
+  });
+}
+
+// mqttPublish.js
 // getdevice.js
 export const URLGetDevice = "https://asia-southeast2-urse-project.cloudfunctions.net/urse-getdevices";
 
