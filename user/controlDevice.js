@@ -1,8 +1,8 @@
 // import mqqtt connection
-import mqttClient from "./mqttConnection.js";
-import { logPublish } from "./logPublish.js";
-import { logSubcribe } from "./logSubcribe.js";
-import { updateStatusDevice } from "./updateStatusDevice.js";
+import mqttClient from "../mqtt/mqttConnection.js";
+import { logPublish } from "../mqtt/logPublish.js";
+import { logSubcribe } from "../mqtt/logSubcribe.js";
+import { updateStatusDevice } from "../edit/updateStatusDevice.js";
 
 // mqttSubscribe.js
 let i = 1;
