@@ -66,6 +66,17 @@ document.addEventListener("DOMContentLoaded", () => {
   validateInput("emaillogin", validateEmail, "emailValidationMessage", 'Email: Harus mengandung "@" dan "."');
   validateInput("passwordlogin", validatePassword, "passwordValidationMessage", "Password: 8+ karakter, huruf & angka");
 
+  // Add an event listener to input fields for the Enter key
+  const inputFields = document.querySelectorAll('#emaillogin, #passwordlogin');
+  inputFields.forEach((input) => {
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        postLoginWithValidation();
+      }
+    });
+  });
+
   // Retrieve Remember Me checkbox and email input
   const rememberMeCheckbox = document.getElementById("remember-me");
   const emailInput = document.getElementById("emaillogin");
