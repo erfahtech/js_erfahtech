@@ -83,6 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
   validateInput('phonesignup', validatePhone, 'phoneValidationMessage', 'Nomor telepon diawali 62, 7-13 karakter');
   validateInput('usernamesignup', validateUsername, 'usernameValidationMessage', 'Username: dua kata, awalan huruf besar');
   validateInput('passwordsignup', validatePassword, 'passwordValidationMessage', 'Password: 8+ karakter, huruf & angka');
+
+  // Handle Enter key press for sign up
+  const inputField = document.querySelectorAll('#emailsignup, #phonesignup, #usernamesignup, #passwordsignup');
+  inputField.forEach((input) => {
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent the default Enter key behavior (form submission)
+        postSignUpWithValidation();
+      }
+    });
+  });
 });
 
 // Function to handle sign up
