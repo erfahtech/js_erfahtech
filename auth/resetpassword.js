@@ -79,4 +79,17 @@ function ResetPassword() {
   };
   
   window.ResetPassword = ResetPassword;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Handle Enter key press ResetPassword
+    const inputField = document.querySelectorAll('#password');
+    inputField.forEach((input) => {
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default Enter key behavior (form submission)
+                ResetPassword();
+            }
+        });
+    });
+});
   
