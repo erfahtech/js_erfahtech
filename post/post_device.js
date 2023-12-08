@@ -77,6 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
   if (loadingElement) {
     loadingElement.style.display = "none";
   }
+
+  // Handle Enter key press PostDevices
+  const inputField = document.querySelectorAll('#isiName, #isiTopic');
+  inputField.forEach((input) => {
+      input.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+              event.preventDefault(); // Prevent the default Enter key behavior (form submission)
+              postDevices();
+          }
+      });
+  });
 });
 
 window.postDevices = postDevices;
